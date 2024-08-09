@@ -55,7 +55,7 @@ curl -X POST localhost:5555/v2/models/tensorrt_llm_bls/generate -d \
 ## Important Notes
 
 - **Ports:**  
-  The ports specified can be modified by exposing them in the Dockerfile and adjusting them accordingly in the \`tritonserver\` command.
+  The ports specified can be modified by exposing them in the Dockerfile and adjusting them accordingly in the `tritonserver` command.
 
 - **Dockerfile Integration:**  
   The `tritonserver` command can be integrated directly into the Dockerfile by configuring the `CMD ["/bin/bash"]` command. Alternatively, include the `tritonserver` command in an `entrypoint.sh` script and copy it into the container. This setup allows the entire Triton infrastructure to start with the `./start_triton.sh` command.
