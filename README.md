@@ -12,7 +12,6 @@ This guide provides step-by-step instructions on how to compile the Mistral-Nemo
    ```bash
    podman build -t <desired_container_name> .  
 
-
 ## Important Notes
 
 - **Base Image:**  
