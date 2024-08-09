@@ -6,7 +6,7 @@ This guide details the steps to deploy the Mistral-Nemo-Instruct-2407 model usin
 
 After successfully creating the container, run the `./start_triton.sh` script to start the Triton Inference Server container. Then, execute the following command to launch the Triton server:
 
-\`\`\`bash
+```bash
 tritonserver --model-repository=/trtback/all_models/inflight_batcher_llm/ \
              --model-control-mode=explicit \
              --load-model=preprocessing \
@@ -21,13 +21,12 @@ tritonserver --model-repository=/trtback/all_models/inflight_batcher_llm/ \
              --http-port=5555 \
              --grpc-port=5556 \
              --metrics-port=5557
-\`\`\`
-
+```
 The Triton server will now be ready to handle requests, such as the following examples:
 
 ### Ensemble Model Request
 
-\`\`\`bash
+```bash
 curl -X POST localhost:5555/v2/models/ensemble/generate -d \
 '{
   "text_input": "<s>[INST] write a story about boats [/INST]",
@@ -38,11 +37,10 @@ curl -X POST localhost:5555/v2/models/ensemble/generate -d \
     "temperature": 0.4
   }
 }'
-\`\`\`
-
+```
 ### TensorRT LLM BLS Model Request
 
-\`\`\`bash
+```bash
 curl -X POST localhost:5555/v2/models/tensorrt_llm_bls/generate -d \
 '{
   "text_input": "<s>[INST] write a story about boats [/INST]",
@@ -53,8 +51,7 @@ curl -X POST localhost:5555/v2/models/tensorrt_llm_bls/generate -d \
     "temperature": 0.4
   }
 }'
-\`\`\`
-
+```
 ## Important Notes
 
 - **Ports:**  
@@ -90,12 +87,11 @@ The following two models manage HTTP communication, routing user requests throug
 
 The \`config.pbtxt\` for each model can theoretically be populated using the following commands (refer to the [tensorrtllm_backend documentation](https://github.com/triton-inference-server/tensorrtllm_backend/blob/main/tools/fill_template.py)):
 
-\`\`\`bash
+```bash
 python3 tools/fill_template.py -i /trtback/all_models/inflight_batcher_llm/preprocessing/config.pbtxt tokenizer_dir:/models/mistral-nemo,tokenizer_type:llama,triton_max_batch_size:16,preprocessing_instance_count:1
 python3 tools/fill_template.py -i /trtback/all_models/inflight_batcher_llm/postprocessing/config.pbtxt tokenizer_dir:/models/mistral-nemo,tokenizer_type:llama,triton_max_batch_size:16,postprocessing_instance_count:1
 python3 tools/fill_template.py -i /trtback/all_models/inflight_batcher_llm/tensorrt_llm_bls/config.pbtxt triton_max_batch_size:16,decoupled_mode:False,bls_instance_count:1,accumulate_tokens:False
 python3 tools/fill_template.py -i /trtback/all_models/inflight_batcher_llm/ensemble/config.pbtxt triton_max_batch_size:16
 python3 tools/fill_template.py -i /trtback/all_models/inflight_batcher_llm/tensorrt_llm/config.pbtxt triton_max_batch_size:16,decoupled_mode:False,max_beam_width:1,engine_dir:/engines/mistral-nemo-engine_v01,max_tokens_in_paged_kv_cache:80000,max_attention_window_size:80000,kv_cache_free_gpu_mem_fraction:0.9,exclude_input_in_output:True,enable_kv_cache_reuse:False,batching_strategy:inflight_batching,max_queue_delay_microseconds:600
-\`\`\`
-
+```
 However, as of the latest version (08.08.2024), these scripts had some bugs, so I manually added the parameters in each \`config.pbtxt\`. You can find the backend I used here: [tensorrtllm_backend](https://github.com/ChristosG/serve-mistral-nemo-as-trt/tree/main/tensorrtllm_backend).
