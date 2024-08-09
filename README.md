@@ -1,4 +1,4 @@
-# Guide to Compiling Mistral-Nemo-Instruct-2407 into a TensorRT-LLM Engine and Serving it on Triton Inference Server
+# Serve Mistral-Nemo-Instruct-2407 as TensorRT-LLM Engine on Triton Inference Server
 
 This guide provides step-by-step instructions on how to compile the Mistral-Nemo-Instruct-2407 model into a TensorRT-LLM engine and deploy it on the Triton Inference Server.
 
