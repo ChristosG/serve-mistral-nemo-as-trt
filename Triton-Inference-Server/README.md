@@ -78,7 +78,7 @@ Within the `/tensorrtllm_backend/all_models/inflight_batcher_llm` directory, the
 - **tensorrt_llm:** This is the LLM, represented as a TensorRT engine.  
   `config.pbtxt` requires multiple configurations.
 
-The following two models manage HTTP communication, routing user requests through preprocessing, then to the TensorRT LLM, and finally through postprocessing back to the user:
+The following two models manage HTTP communication, routing user requests through preprocessing, then to the tensorrt_llm, and finally through postprocessing back to the user:
 
 - **ensemble**
 - **tensorrt_llm_bls**
