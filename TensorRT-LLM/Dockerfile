@@ -9,8 +9,4 @@ RUN pip3 install tensorrt_llm -U --pre --extra-index-url https://pypi.nvidia.com
 RUN git clone https://github.com/NVIDIA/TensorRT-LLM.git
 WORKDIR /TensorRT-LLM
 
-EXPOSE 8000
-EXPOSE 8001
-EXPOSE 8002 
-
 CMD ["/bin/bash"]
