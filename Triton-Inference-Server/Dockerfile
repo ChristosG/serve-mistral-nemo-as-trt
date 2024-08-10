@@ -4,7 +4,7 @@ RUN apt-get update && apt-get -y install python3.10 python3-pip openmpi-bin libo
 
 RUN apt-get update && apt-get install -y --no-install-recommends rapidjson-dev python-is-python3 ccache 
 
-RUN pip3 uninstall -y tensorrt tensorrt-cu12 tensorrt-cu12-bindings tensorrt-cu12-libs tensorrt-llm torch  #needs to be rebuilt
+RUN pip3 uninstall -y tensorrt tensorrt-cu12 tensorrt-cu12-bindings tensorrt-cu12-libs tensorrt-llm torch  #needs to be rebuilt for the latest version
 
 RUN pip3 install tensorrt_llm -U --pre --extra-index-url https://pypi.nvidia.com
 
